@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://c51g6lnuo3s26"]
+
+[ext_resource type="Script" uid="uid://dvldlsefeagn3" path="res://Scenes/physical_tile.gd" id="1_0wyri"]
+[ext_resource type="Texture2D" uid="uid://daq0e5m3y7v5b" path="res://Tiles.png" id="2_vtj4q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qolid"]
+
+[node name="PhysicalTile" type="RigidBody2D"]
+script = ExtResource("1_0wyri")
+
+[node name="TileSprite" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("2_vtj4q")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qolid")

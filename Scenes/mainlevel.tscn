@@ -1,9 +1,40 @@
-[gd_scene load_steps=2 format=3 uid="uid://dtbvq8af4fhjd"]
+[gd_scene load_steps=5 format=3 uid="uid://dtbvq8af4fhjd"]
 
 [ext_resource type="PackedScene" uid="uid://6ujrs1cn581a" path="res://Scenes/minesweeper.tscn" id="1_2j27f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2j27f"]
+size = Vector2(2028, 182)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oolay"]
+size = Vector2(1073.75, 1109)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_am5f7"]
+size = Vector2(842.375, 1109)
 
 [node name="MainLevel" type="Node2D"]
 
 [node name="Minesweeper" parent="." instance=ExtResource("1_2j27f")]
 texture_filter = 1
 position = Vector2(192, 224)
+
+[node name="Floor" type="StaticBody2D" parent="." groups=["floor"]]
+
+[node name="Floor" type="CollisionShape2D" parent="Floor" groups=["floor"]]
+position = Vector2(916, 989)
+shape = SubResource("RectangleShape2D_2j27f")
+
+[node name="Ceiling" type="StaticBody2D" parent="." groups=["ceiling"]]
+
+[node name="Ceiling" type="CollisionShape2D" parent="Ceiling" groups=["ceiling"]]
+position = Vector2(965, -89)
+shape = SubResource("RectangleShape2D_2j27f")
+
+[node name="Walls" type="StaticBody2D" parent="." groups=["walls"]]
+
+[node name="Wall1" type="CollisionShape2D" parent="Walls" groups=["walls"]]
+position = Vector2(-539.125, 525.5)
+shape = SubResource("RectangleShape2D_oolay")
+
+[node name="Wall2" type="CollisionShape2D" parent="Walls" groups=["walls"]]
+position = Vector2(2343.81, 530.5)
+shape = SubResource("RectangleShape2D_am5f7")

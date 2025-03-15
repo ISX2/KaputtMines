@@ -128,5 +128,6 @@ func revealAllMines(avoid: Vector2i) -> void:
 						set_cell(cellCoords, 0, Vector2i(1, 3))
 					else: 
 						set_cell(cellCoords, 0, Vector2i(2, 0))
-				
-	
+						
+	if gameEnded:
+		get_parent().start_falling()
