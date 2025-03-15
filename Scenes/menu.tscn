@@ -1,7 +1,35 @@
-[gd_scene load_steps=6 format=3 uid="uid://cjd4sjb8ow24a"]
+[gd_scene load_steps=7 format=3 uid="uid://cjd4sjb8ow24a"]
 
 [ext_resource type="PackedScene" uid="uid://cvomhjhmowvy8" path="res://assets/UI/Error_message.tscn" id="1_xhh6f"]
 [ext_resource type="Texture2D" uid="uid://3q5ruyevcu4e" path="res://assets/UI/cat_hold.png" id="2_cayip"]
+[ext_resource type="Texture2D" uid="uid://dtcdxjfaoowu8" path="res://assets/UI/Dialogue box.png" id="3_cayip"]
+
+[sub_resource type="Animation" id="Animation_wwsa2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(502, 80)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_158mb"]
 resource_name = "appear"
@@ -31,33 +59,6 @@ tracks/1/keys = {
 "values": [false, true]
 }
 
-[sub_resource type="Animation" id="Animation_wwsa2"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(502, 80)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jsrd8"]
 _data = {
 &"RESET": SubResource("Animation_wwsa2"),
@@ -81,3 +82,17 @@ texture = ExtResource("2_cayip")
 libraries = {
 &"": SubResource("AnimationLibrary_jsrd8")
 }
+
+[node name="dialogue" type="Sprite2D" parent="."]
+position = Vector2(881, 206.5)
+scale = Vector2(1, 0.855)
+texture = ExtResource("3_cayip")
+
+[node name="Label" type="Label" parent="dialogue"]
+offset_left = -173.0
+offset_top = -73.0994
+offset_right = 165.0
+offset_bottom = 65.9006
+text = "Oh! It seems like you are missing a key... I think you can find one by beating this game!"
+autowrap_mode = 2
+metadata/_edit_use_anchors_ = true

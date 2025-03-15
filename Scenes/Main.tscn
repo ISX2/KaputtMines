@@ -2,11 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://ck4dun8o1rc1j" path="res://assets/UI/Start.png" id="1_idj7w"]
 [ext_resource type="Texture2D" uid="uid://cekhdhirvx1hc" path="res://assets/UI/background_colorcorrector.png" id="2_kln2b"]
-[ext_resource type="Texture2D" uid="uid://iwa6q4ajufl" path="res://assets/dialogue/emote_normal.png" id="3_kln2b"]
+[ext_resource type="Texture2D" uid="uid://iwa6q4ajufl" path="res://assets/UI/emote_normal.png" id="3_kln2b"]
 [ext_resource type="Script" uid="uid://cr87denky8ppu" path="res://Scenes/window.gd" id="4_rgh2o"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rgh2o"]
-bg_color = Color(0.321569, 0.501961, 0.568627, 1)
+bg_color = Color(0.545098, 0.635294, 0.811765, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pbw6q"]
 texture = ExtResource("1_idj7w")
@@ -33,11 +33,13 @@ grow_vertical = 2
 color = Color(0, 0.592639, 0.594472, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="bg"]
+texture_filter = 1
 position = Vector2(960, 521)
 scale = Vector2(3, 2.89444)
 texture = ExtResource("2_kln2b")
 
 [node name="EmoteNormal" type="Sprite2D" parent="bg"]
+texture_filter = 1
 position = Vector2(101, 415)
 scale = Vector2(5.0625, 5.375)
 texture = ExtResource("3_kln2b")
@@ -64,6 +66,7 @@ grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_rgh2o")
 
 [node name="Button" type="Button" parent="bg/Panel"]
+texture_filter = 1
 layout_mode = 0
 offset_left = 4.0
 offset_top = 3.0
@@ -73,6 +76,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_pbw6q")
 text = "Start"
 
 [node name="ColorRect2" type="ColorRect" parent="bg/Panel"]
+layout_mode = 0
 offset_left = 1839.0
 offset_top = 4.0
 offset_right = 1906.0
@@ -85,7 +89,7 @@ offset_left = 1839.0
 offset_top = 4.0
 offset_right = 1905.0
 offset_bottom = 34.0
-color = Color(0.22704, 0.372165, 0.425477, 1)
+color = Color(0.301961, 0.301961, 0.427451, 0.411765)
 
 [node name="Label" type="Label" parent="bg/Panel/ColorRect"]
 layout_mode = 0
@@ -99,4 +103,5 @@ text = "18:36PM"
 title = "CatMines"
 initial_position = 1
 size = Vector2i(700, 500)
+theme_override_colors/title_color = Color(0.211765, 0.211765, 0.337255, 1)
 script = ExtResource("4_rgh2o")
