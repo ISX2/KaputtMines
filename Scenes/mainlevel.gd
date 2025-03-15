@@ -4,7 +4,7 @@ extends Node2D
 
 # Load your window scene and minesweeper scene
 var window_scene = preload("res://Scenes/minesweeper_window.tscn")
-var minesweeper_scene = preload("res://path_to_your/minesweeper_scene.tscn
+var minesweeper_scene = preload("res://Scenes/minesweeper.tscn")
 func _ready():
 	# Create minesweeper window
 	create_minesweeper_window()
