@@ -1,3 +1,83 @@
-[gd_scene format=3 uid="uid://cjd4sjb8ow24a"]
+[gd_scene load_steps=6 format=3 uid="uid://cjd4sjb8ow24a"]
+
+[ext_resource type="PackedScene" uid="uid://cvomhjhmowvy8" path="res://assets/UI/Error_message.tscn" id="1_xhh6f"]
+[ext_resource type="Texture2D" uid="uid://3q5ruyevcu4e" path="res://assets/UI/cat_hold.png" id="2_cayip"]
+
+[sub_resource type="Animation" id="Animation_158mb"]
+resource_name = "appear"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(4.1, 4.23333, 4.4),
+"transitions": PackedFloat32Array(1, 1, 0.0398301),
+"update": 0,
+"values": [Vector2(502, 74.63), Vector2(502, 73.845), Vector2(502, 77.44)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(3.93333, 4.13333),
+"transitions": PackedFloat32Array(1, 4.59479),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_wwsa2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(502, 80)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jsrd8"]
+_data = {
+&"RESET": SubResource("Animation_wwsa2"),
+&"appear": SubResource("Animation_158mb")
+}
 
 [node name="Node2D" type="Node2D"]
+
+[node name="Control" parent="." instance=ExtResource("1_xhh6f")]
+offset_left = 251.0
+offset_top = 86.0
+offset_right = 291.0
+offset_bottom = 126.0
+
+[node name="CatHold" type="Sprite2D" parent="."]
+position = Vector2(502, 80)
+scale = Vector2(1.375, 1.375)
+texture = ExtResource("2_cayip")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CatHold"]
+libraries = {
+&"": SubResource("AnimationLibrary_jsrd8")
+}
