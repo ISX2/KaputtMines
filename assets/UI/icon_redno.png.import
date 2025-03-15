@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bu05263bg6s8s"
-path="res://.godot/imported/button_select.png-dc7b9aa566311b82216dedeb9cfba429.ctex"
+uid="uid://d1eabx5cfc8nl"
+path="res://.godot/imported/icon_redno.png-0259ed292bd544155b3d3285b1a7c780.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/button_select.png"
-dest_files=["res://.godot/imported/button_select.png-dc7b9aa566311b82216dedeb9cfba429.ctex"]
+source_file="res://assets/UI/icon_redno.png"
+dest_files=["res://.godot/imported/icon_redno.png-0259ed292bd544155b3d3285b1a7c780.ctex"]
 
 [params]
 

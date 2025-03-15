@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cuu4um77si0yw"
-path="res://.godot/imported/female_confused.png-e2eee8dc282c955eb2354e6280677cba.ctex"
+uid="uid://doknvq2texb2q"
+path="res://.godot/imported/button.png-7e28954d923c594013e1393853593bcf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/female_confused.png"
-dest_files=["res://.godot/imported/female_confused.png-e2eee8dc282c955eb2354e6280677cba.ctex"]
+source_file="res://assets/UI/button.png"
+dest_files=["res://.godot/imported/button.png-7e28954d923c594013e1393853593bcf.ctex"]
 
 [params]
 

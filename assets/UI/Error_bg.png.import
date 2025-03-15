@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmits6w4sfee6"
-path="res://.godot/imported/emote_angery.png-906d279359e5349801d033930a50ee97.ctex"
+uid="uid://b7av0uxftss40"
+path="res://.godot/imported/Error_bg.png-b88c2634812729683d26c156729c7f7b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/emote_angery.png"
-dest_files=["res://.godot/imported/emote_angery.png-906d279359e5349801d033930a50ee97.ctex"]
+source_file="res://assets/UI/Error_bg.png"
+dest_files=["res://.godot/imported/Error_bg.png-b88c2634812729683d26c156729c7f7b.ctex"]
 
 [params]
 

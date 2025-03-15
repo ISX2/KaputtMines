@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vs4wmg7c4g6m"
-path="res://.godot/imported/female_angery.png-ab4a5f6a27998728ba8bf511b9a669c6.ctex"
+uid="uid://bu05263bg6s8s"
+path="res://.godot/imported/button_select.png-96e4441bd9f5214fde9c0e921d3feb47.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/female_angery.png"
-dest_files=["res://.godot/imported/female_angery.png-ab4a5f6a27998728ba8bf511b9a669c6.ctex"]
+source_file="res://assets/UI/button_select.png"
+dest_files=["res://.godot/imported/button_select.png-96e4441bd9f5214fde9c0e921d3feb47.ctex"]
 
 [params]
 
