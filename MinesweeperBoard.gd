@@ -4,6 +4,9 @@ const CELL_ROWS := 30
 const CELL_COLUMNS := 16
 const MINE_COUNT:= 99
 
+
+#var board_offset:= Vector2i(1,1)
+
 # -1  = empty cell
 # 0 = mine
 # 1-8 = number cell\
@@ -19,7 +22,7 @@ func _ready() -> void:
 func setUpBoard() -> void:
 	for y in range(CELL_COLUMNS):
 		for x in range(CELL_ROWS):
-			set_cell( Vector2i(x,y), 0, Vector2i(0,0))
+			set_cell(Vector2i(x,y), 0, Vector2i(0,0))
 			cells.append(-1)
 	
 func setUpMines(avoid: Vector2i) -> void:
@@ -118,8 +121,11 @@ func revealAllMines(avoid: Vector2i) -> void:
 			cellCoords = Vector2i(x,y)
 			if cells[getCellIndex(cellCoords)] == 0:
 				if not cellCoords == avoid:
-					set_cell(cellCoords, 0, Vector2i(2, 0))
-				else:
+					print(getAtlasCoords(cellCoords))
 					if getAtlasCoords(cellCoords) == Vector2i(1, 0):
+						print(getAtlasCoords(cellCoords))
 						set_cell(cellCoords, 0, Vector2i(1, 3))
+					else: 
+						set_cell(cellCoords, 0, Vector2i(2, 0))
+				
 	
