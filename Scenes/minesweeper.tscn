@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://6ujrs1cn581a"]
+[gd_scene load_steps=6 format=3 uid="uid://6ujrs1cn581a"]
 
 [ext_resource type="Texture2D" uid="uid://daq0e5m3y7v5b" path="res://Tiles.png" id="1_hg8vg"]
-[ext_resource type="Script" uid="uid://brrdkc1nxl231" path="res://minesweeper_board.gd" id="3_7xpvn"]
+[ext_resource type="Script" uid="uid://brrdkc1nxl231" path="res://Scripts/minesweeper_board.gd" id="3_7xpvn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nlm7j"]
 texture = ExtResource("1_hg8vg")
@@ -23,7 +23,15 @@ texture = ExtResource("1_hg8vg")
 [sub_resource type="TileSet" id="TileSet_o5st7"]
 sources/0 = SubResource("TileSetAtlasSource_nlm7j")
 
-[node name="Board" type="TileMapLayer"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rf5he"]
+
+[node name="MinesweeperBoard" type="RigidBody2D"]
+
+[node name="Board" type="TileMapLayer" parent="."]
 use_parent_material = true
+scale = Vector2(2, 2)
 tile_set = SubResource("TileSet_o5st7")
 script = ExtResource("3_7xpvn")
+
+[node name="BoardCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_rf5he")

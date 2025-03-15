@@ -5,6 +5,7 @@ const CELL_COLUMNS := 16
 const MINE_COUNT:= 99
 
 
+
 #var board_offset:= Vector2i(1,1)
 
 # -1  = empty cell
@@ -24,6 +25,8 @@ func setUpBoard() -> void:
 		for x in range(CELL_ROWS):
 			set_cell(Vector2i(x,y), 0, Vector2i(0,0))
 			cells.append(-1)
+	$"../BoardCollision".shape.set_size(Vector2(CELL_ROWS * 16 * scale.x, CELL_COLUMNS * 16 * scale.y))
+	$"../BoardCollision".position = Vector2(CELL_ROWS * 16 * scale.x / 2, CELL_COLUMNS * 16 * scale.y / 2)
 	
 func setUpMines(avoid: Vector2i) -> void:
 	for i in range(MINE_COUNT):
