@@ -1,3 +1,289 @@
-[gd_scene format=3 uid="uid://cvomhjhmowvy8"]
+[gd_scene load_steps=13 format=3 uid="uid://cvomhjhmowvy8"]
 
-[node name="ErrorMessage" type="Node2D"]
+[ext_resource type="Texture2D" uid="uid://b7av0uxftss40" path="res://assets/UI/Error_bg.png" id="1_3mtei"]
+[ext_resource type="StyleBox" uid="uid://bvdu0xasux5o0" path="res://assets/ressources/normal_button.tres" id="1_wyq3e"]
+[ext_resource type="Texture2D" uid="uid://d1eabx5cfc8nl" path="res://assets/UI/icon_redno.png" id="3_8l3j3"]
+[ext_resource type="Texture2D" uid="uid://bl2ja0bwtv7h0" path="res://assets/UI/icon_blue_i.png" id="3_610lp"]
+[ext_resource type="Texture2D" uid="uid://b6hhjknhdpyyw" path="res://assets/UI/icon_warning.png" id="4_lolpo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wyq3e"]
+bg_color = Color(0.576471, 0.462745, 0.4, 1)
+shadow_size = 4
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="Theme" id="Theme_3mtei"]
+Button/colors/font_color = Color(0.207843, 0.117647, 0.0705882, 1)
+Button/font_sizes/font_size = 12
+Button/styles/hover = SubResource("StyleBoxFlat_wyq3e")
+Button/styles/normal = ExtResource("1_wyq3e")
+
+[sub_resource type="Theme" id="Theme_610lp"]
+
+[sub_resource type="FontVariation" id="FontVariation_lolpo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ybdej"]
+bg_color = Color(0.823529, 0.760784, 0.74902, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.301961, 0.301961, 0.427451, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_h3nbe"]
+font_size = 14
+
+[sub_resource type="LabelSettings" id="LabelSettings_610lp"]
+font_size = 12
+font_color = Color(0.262745, 0.176471, 0.133333, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_3mtei")
+
+[node name="POP-UP_info" type="NinePatchRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 7.075
+anchor_bottom = 4.15
+size_flags_vertical = 4
+texture = ExtResource("1_3mtei")
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="POP-UP_info"]
+position = Vector2(14, 32)
+scale = Vector2(1.3125, 1.3125)
+texture = ExtResource("3_610lp")
+
+[node name="exit" type="Button" parent="POP-UP_info"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.936
+anchor_top = 0.018
+anchor_right = 0.982
+anchor_bottom = 0.09
+offset_left = 0.112
+offset_top = 0.0119998
+offset_right = 0.0939941
+offset_bottom = 1.06
+theme = SubResource("Theme_610lp")
+theme_override_fonts/font = SubResource("FontVariation_lolpo")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_ybdej")
+text = "X"
+
+[node name="Button" type="Button" parent="POP-UP_info"]
+layout_mode = 0
+offset_left = 203.0
+offset_top = 135.0
+offset_right = 262.0
+offset_bottom = 155.0
+text = "okay"
+
+[node name="title" type="Label" parent="POP-UP_info"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.067
+anchor_top = 0.078
+anchor_right = 0.925
+anchor_bottom = 0.169
+offset_left = -9.961
+offset_top = -12.948
+offset_right = -42.775
+offset_bottom = -8.054
+text = "TRANSACTION_PENDING"
+label_settings = SubResource("LabelSettings_h3nbe")
+autowrap_mode = 2
+
+[node name="text" type="Label" parent="POP-UP_info"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.134
+anchor_top = 0.223
+anchor_right = 0.925
+anchor_bottom = 0.753
+offset_left = -6.922
+offset_top = -14.018
+offset_right = -9.77502
+offset_bottom = -83.998
+text = "Please confirm transaction code:"
+label_settings = SubResource("LabelSettings_610lp")
+autowrap_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="POP-UP_info"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.024
+anchor_top = 4.05
+anchor_right = 1.138
+anchor_bottom = 5.45
+offset_left = 19.792
+offset_top = -579.3
+offset_right = -53.054
+offset_bottom = -788.7
+theme_override_font_sizes/font_size = 11
+placeholder_text = "copy transaction code"
+emoji_menu_enabled = false
+shortcut_keys_enabled = false
+
+[node name="POP-UP_warning" type="NinePatchRect" parent="."]
+offset_right = 283.0
+offset_bottom = 166.0
+size_flags_vertical = 4
+texture = ExtResource("1_3mtei")
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="exit" type="Button" parent="POP-UP_warning"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.936
+anchor_top = 0.018
+anchor_right = 0.982
+anchor_bottom = 0.09
+offset_left = 0.112
+offset_top = 0.0119998
+offset_right = 0.0939941
+offset_bottom = 1.06
+theme = SubResource("Theme_610lp")
+theme_override_fonts/font = SubResource("FontVariation_lolpo")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_ybdej")
+text = "X"
+
+[node name="Sprite2D" type="Sprite2D" parent="POP-UP_warning"]
+position = Vector2(19, 31)
+scale = Vector2(1.3125, 1.3125)
+texture = ExtResource("4_lolpo")
+
+[node name="Button" type="Button" parent="POP-UP_warning"]
+layout_mode = 0
+offset_left = 142.0
+offset_top = 135.0
+offset_right = 201.0
+offset_bottom = 155.0
+text = "okay"
+
+[node name="Button2" type="Button" parent="POP-UP_warning"]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 135.0
+offset_right = 266.0
+offset_bottom = 155.0
+text = "cancel"
+
+[node name="title" type="Label" parent="POP-UP_warning"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.067
+anchor_top = 0.078
+anchor_right = 0.925
+anchor_bottom = 0.169
+offset_left = -9.961
+offset_top = -12.948
+offset_right = -42.775
+offset_bottom = -8.054
+text = "ERROR_BAD_KEY"
+label_settings = SubResource("LabelSettings_h3nbe")
+autowrap_mode = 2
+
+[node name="text" type="Label" parent="POP-UP_warning"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.117
+anchor_top = 0.133
+anchor_right = 0.925
+anchor_bottom = 0.753
+offset_left = -0.111
+offset_top = -0.078001
+offset_right = -2.77502
+offset_bottom = -0.998001
+text = "The program could not be opened because there is no valid key. Input valid key and try again"
+label_settings = SubResource("LabelSettings_610lp")
+autowrap_mode = 2
+
+[node name="POP-UP_error" type="NinePatchRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 283.0
+offset_bottom = 166.0
+size_flags_vertical = 4
+texture = ExtResource("1_3mtei")
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="exit" type="Button" parent="POP-UP_error"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.936
+anchor_top = 0.018
+anchor_right = 0.982
+anchor_bottom = 0.09
+offset_left = 0.112
+offset_top = 0.0119998
+offset_right = 0.0939941
+offset_bottom = 1.06
+theme = SubResource("Theme_610lp")
+theme_override_fonts/font = SubResource("FontVariation_lolpo")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_ybdej")
+text = "X"
+
+[node name="Sprite2D" type="Sprite2D" parent="POP-UP_error"]
+position = Vector2(22, 35)
+scale = Vector2(1.3125, 1.3125)
+texture = ExtResource("3_8l3j3")
+
+[node name="Button" type="Button" parent="POP-UP_error"]
+layout_mode = 0
+offset_left = 142.0
+offset_top = 135.0
+offset_right = 201.0
+offset_bottom = 155.0
+text = "okay"
+
+[node name="Button2" type="Button" parent="POP-UP_error"]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 135.0
+offset_right = 266.0
+offset_bottom = 155.0
+text = "cancel"
+
+[node name="title" type="Label" parent="POP-UP_error"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_right = 0.925
+anchor_bottom = 0.093
+offset_left = -0.0750003
+offset_right = -44.775
+offset_bottom = 4.562
+text = "ERROR_BAD_KEY"
+label_settings = SubResource("LabelSettings_h3nbe")
+autowrap_mode = 2
+
+[node name="text" type="Label" parent="POP-UP_error"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.134
+anchor_top = 0.223
+anchor_right = 0.925
+anchor_bottom = 0.753
+offset_left = 0.0779991
+offset_top = -12.018
+offset_right = 2.22498
+offset_bottom = 2.002
+text = "The program could not be opened because there is no valid key. Input valid key and try again"
+label_settings = SubResource("LabelSettings_610lp")
+autowrap_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://3q5ruyevcu4e"
-path="res://.godot/imported/cat_hold.png-155fed23dccd739819071046c24ace9e.ctex"
+uid="uid://iwa6q4ajufl"
+path="res://.godot/imported/emote_normal.png-eb0709e5505797c4bf58e030b72561dc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/cat_hold.png"
-dest_files=["res://.godot/imported/cat_hold.png-155fed23dccd739819071046c24ace9e.ctex"]
+source_file="res://assets/UI/emote_normal.png"
+dest_files=["res://.godot/imported/emote_normal.png-eb0709e5505797c4bf58e030b72561dc.ctex"]
 
 [params]
 

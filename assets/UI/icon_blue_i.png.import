@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d1eabx5cfc8nl"
-path="res://.godot/imported/icon_redno.png-2e2df316b1ec7ad14fe9bc319bc2030b.ctex"
+uid="uid://bl2ja0bwtv7h0"
+path="res://.godot/imported/icon_blue_i.png-503b87bbf4b6501fe09945a2eaa1ca59.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/icon_redno.png"
-dest_files=["res://.godot/imported/icon_redno.png-2e2df316b1ec7ad14fe9bc319bc2030b.ctex"]
+source_file="res://assets/UI/icon_blue_i.png"
+dest_files=["res://.godot/imported/icon_blue_i.png-503b87bbf4b6501fe09945a2eaa1ca59.ctex"]
 
 [params]
 
