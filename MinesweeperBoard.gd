@@ -121,9 +121,7 @@ func revealAllMines(avoid: Vector2i) -> void:
 			cellCoords = Vector2i(x,y)
 			if cells[getCellIndex(cellCoords)] == 0:
 				if not cellCoords == avoid:
-					print(getAtlasCoords(cellCoords))
 					if getAtlasCoords(cellCoords) == Vector2i(1, 0):
-						print(getAtlasCoords(cellCoords))
 						set_cell(cellCoords, 0, Vector2i(1, 3))
 					else: 
 						set_cell(cellCoords, 0, Vector2i(2, 0))
