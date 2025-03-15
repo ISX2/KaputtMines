@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cvomhjhmowvy8"]
+[gd_scene load_steps=10 format=3 uid="uid://cvomhjhmowvy8"]
 
 [ext_resource type="Texture2D" uid="uid://b7av0uxftss40" path="res://assets/UI/Error_bg.png" id="1_3mtei"]
 [ext_resource type="StyleBox" uid="uid://bvdu0xasux5o0" path="res://assets/ressources/normal_button.tres" id="1_wyq3e"]
 [ext_resource type="Texture2D" uid="uid://d1eabx5cfc8nl" path="res://assets/UI/icon_redno.png" id="3_8l3j3"]
+[ext_resource type="Texture2D" uid="uid://bl2ja0bwtv7h0" path="res://assets/UI/icon_blue_i.png" id="3_610lp"]
+[ext_resource type="Texture2D" uid="uid://b6hhjknhdpyyw" path="res://assets/UI/icon_warning.png" id="4_lolpo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wyq3e"]
 bg_color = Color(0.576471, 0.462745, 0.4, 1)
@@ -29,8 +31,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme = SubResource("Theme_3mtei")
 
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
-layout_mode = 0
+[node name="POP-UP_info" type="NinePatchRect" parent="."]
 offset_right = 283.0
 offset_bottom = 166.0
 size_flags_vertical = 4
@@ -38,12 +39,79 @@ texture = ExtResource("1_3mtei")
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="NinePatchRect"]
+[node name="Sprite2D" type="Sprite2D" parent="POP-UP_info"]
+position = Vector2(24, 46)
+scale = Vector2(1.3125, 1.3125)
+texture = ExtResource("3_610lp")
+
+[node name="Button" type="Button" parent="POP-UP_info"]
+layout_mode = 0
+offset_left = 203.0
+offset_top = 135.0
+offset_right = 262.0
+offset_bottom = 155.0
+text = "okay"
+
+[node name="title" type="Label" parent="POP-UP_info"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.067
+anchor_top = 0.078
+anchor_right = 0.925
+anchor_bottom = 0.169
+offset_left = 3.039
+offset_top = -1.948
+offset_right = -29.775
+offset_bottom = 2.946
+text = "TRANSACTION_PENDING"
+label_settings = SubResource("LabelSettings_h3nbe")
+autowrap_mode = 2
+
+[node name="text" type="Label" parent="POP-UP_info"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.134
+anchor_top = 0.223
+anchor_right = 0.925
+anchor_bottom = 0.753
+offset_left = 0.0779991
+offset_top = -0.0180016
+offset_right = -2.77502
+offset_bottom = -69.998
+text = "Please confirm transaction code:"
+label_settings = SubResource("LabelSettings_610lp")
+autowrap_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="POP-UP_info"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.024
+anchor_top = 4.05
+anchor_right = 1.138
+anchor_bottom = 5.45
+offset_left = 19.792
+offset_top = -579.3
+offset_right = -53.054
+offset_bottom = -788.7
+theme_override_font_sizes/font_size = 11
+placeholder_text = "copy transaction code"
+emoji_menu_enabled = false
+shortcut_keys_enabled = false
+
+[node name="POP-UP_warning" type="NinePatchRect" parent="."]
+offset_right = 283.0
+offset_bottom = 166.0
+size_flags_vertical = 4
+texture = ExtResource("1_3mtei")
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="POP-UP_warning"]
 position = Vector2(24.5, 42.5)
 scale = Vector2(1.3125, 1.3125)
-texture = ExtResource("3_8l3j3")
+texture = ExtResource("4_lolpo")
 
-[node name="Button" type="Button" parent="NinePatchRect"]
+[node name="Button" type="Button" parent="POP-UP_warning"]
 layout_mode = 0
 offset_left = 142.0
 offset_top = 135.0
@@ -51,7 +119,7 @@ offset_right = 201.0
 offset_bottom = 155.0
 text = "okay"
 
-[node name="Button2" type="Button" parent="NinePatchRect"]
+[node name="Button2" type="Button" parent="POP-UP_warning"]
 layout_mode = 0
 offset_left = 207.0
 offset_top = 135.0
@@ -59,19 +127,7 @@ offset_right = 266.0
 offset_bottom = 155.0
 text = "cancel"
 
-[node name="TextEdit" type="TextEdit" parent="NinePatchRect"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.053
-anchor_top = 0.536
-anchor_right = 0.94
-anchor_bottom = 0.608
-offset_left = 0.000999451
-offset_top = 0.0239944
-offset_right = -0.0200195
-offset_bottom = 0.071991
-
-[node name="title" type="Label" parent="NinePatchRect"]
+[node name="title" type="Label" parent="POP-UP_warning"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.067
@@ -86,7 +142,67 @@ text = "ERROR_BAD_KEY"
 label_settings = SubResource("LabelSettings_h3nbe")
 autowrap_mode = 2
 
-[node name="text" type="Label" parent="NinePatchRect"]
+[node name="text" type="Label" parent="POP-UP_warning"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.134
+anchor_top = 0.223
+anchor_right = 0.925
+anchor_bottom = 0.753
+offset_left = 0.0779991
+offset_top = -0.0180016
+offset_right = 2.22498
+offset_bottom = 14.002
+text = "The program could not be opened because there is no valid key. Input valid key and try again"
+label_settings = SubResource("LabelSettings_610lp")
+autowrap_mode = 2
+
+[node name="POP-UP_error" type="NinePatchRect" parent="."]
+layout_mode = 0
+offset_right = 283.0
+offset_bottom = 166.0
+size_flags_vertical = 4
+texture = ExtResource("1_3mtei")
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="POP-UP_error"]
+position = Vector2(24.5, 42.5)
+scale = Vector2(1.3125, 1.3125)
+texture = ExtResource("3_8l3j3")
+
+[node name="Button" type="Button" parent="POP-UP_error"]
+layout_mode = 0
+offset_left = 142.0
+offset_top = 135.0
+offset_right = 201.0
+offset_bottom = 155.0
+text = "okay"
+
+[node name="Button2" type="Button" parent="POP-UP_error"]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 135.0
+offset_right = 266.0
+offset_bottom = 155.0
+text = "cancel"
+
+[node name="title" type="Label" parent="POP-UP_error"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.067
+anchor_top = 0.078
+anchor_right = 0.925
+anchor_bottom = 0.169
+offset_left = 3.039
+offset_top = -1.948
+offset_right = -29.775
+offset_bottom = 2.946
+text = "ERROR_BAD_KEY"
+label_settings = SubResource("LabelSettings_h3nbe")
+autowrap_mode = 2
+
+[node name="text" type="Label" parent="POP-UP_error"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.134
