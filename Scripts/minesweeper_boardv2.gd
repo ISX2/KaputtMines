@@ -3,7 +3,9 @@ extends Node2D
 const CELL_ROWS := 30
 const CELL_COLUMNS := 16
 const MINE_COUNT := 99
-const TILE_SIZE := 32
+const SCALE_FACTOR := Vector2(2, 2)
+const TILE_SIZE := 16
+
 
 # Texture atlas constants
 const TILE_ATLAS_COLS := 4
@@ -65,10 +67,12 @@ func setUpBoard() -> void:
 			add_child(tile_instance)
 			
 			# Set position
-			tile_instance.position = Vector2(x * TILE_SIZE, y * TILE_SIZE)
+			tile_instance.position = Vector2(x * TILE_SIZE, y * TILE_SIZE) * SCALE_FACTOR
+			if y==0 and x==1:
+				print(tile_instance.position)
 			
 			# Set up the tile with texture and region
-			tile_instance.setup(tile_texture, get_tile_region(HIDDEN_TILE))
+			tile_instance.setup(tile_texture, get_tile_region(HIDDEN_TILE), SCALE_FACTOR)
 			
 			# Store reference to tile
 			tiles.append(tile_instance)
@@ -213,18 +217,20 @@ func revealAllMines(exploded_position: Vector2i) -> void:
 
 func explode_board() -> void:
 	# Start with a small delay
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.1).timeout
 	
 	# Make all tiles fall with physics
 	for tile in tiles:
 		tile.activate_physics()
 		
 		# Apply explosion force
-		var direction = (tile.global_position - global_position).normalized()
-		var distance = tile.global_position.distance_to(global_position)
-		var force = direction * (300 / max(1, distance * 0.1)) * (0.8 + randf() * 0.4)
-		tile.apply_central_impulse(force)
+		#var direction = (tile.global_position - global_position).normalized()
+		#var distance = tile.global_position.distance_to(global_position)
+		#var force = direction * (300 / max(1, distance * 0.1)) * (0.8 + randf() * 0.4)
+		#tile.apply_central_impulse(force)
+		#
+		## Apply random rotation
+		#var random_torque = (randf() - 0.5) * 2 * 100
+		#tile.apply_torque(random_torque)
 		
-		# Apply random rotation
-		var random_torque = (randf() - 0.5) * 2 * 100
-		tile.apply_torque(random_torque)
+		

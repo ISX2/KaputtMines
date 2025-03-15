@@ -8,6 +8,8 @@ var grid_position: Vector2i
 var is_revealed: bool = false
 var is_flagged: bool = false
 
+var SCALE
+
 func _ready() -> void:
 	# Start with physics disabled
 	freeze = true
@@ -28,11 +30,14 @@ func setup(texture: Texture2D, region: Rect2, scale_factor: Vector2 = Vector2(1,
 	sprite.region_rect = region
 	
 	# Apply scale
-	scale = scale_factor
+	#scale = scale_factor
+	#SCALE = scale_factor
 	
 	# Update collision shape based on texture size
 	var collision = $Collision
-	var shape_size = Vector2(region.size.x, region.size.y)
+	#collision.position = Vector2(region.size.x, region.size.y)
+	print(region.size)
+	var shape_size = Vector2(region.size.x, region.size.y) * scale_factor
 	if collision.shape == null:
 		var shape = RectangleShape2D.new()
 		shape.set_size(shape_size)
@@ -50,10 +55,12 @@ func activate_physics():
 	
 	# Disable input
 	input_pickable = false
-	
+	angular_velocity = (randf() - 0.5) * 10
+	apply_central_impulse(Vector2(randf_range(-200, 200), randf_range(-200, -50)))
 	# Make it not collide with other tiles
 	collision_layer = 2
 	collision_mask = 1
+	
 
 func _on_input_event(_viewport, event, _shape_idx):
 	if freeze:  # Only process input when not in physics mode

@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://6ujrs1cn581a"]
+[gd_scene load_steps=2 format=3 uid="uid://b8dabd21j0ckn"]
 
 [ext_resource type="Script" uid="uid://d2ljrol8m1cyr" path="res://Scripts/minesweeper_boardv2.gd" id="1_22q3e"]
 
-[node name="MineSweeper" type="Node2D"]
+[node name="Minesweeper" type="Node2D"]
 script = ExtResource("1_22q3e")
