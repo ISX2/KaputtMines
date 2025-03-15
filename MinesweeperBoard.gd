@@ -55,7 +55,6 @@ func _input(event: InputEvent) -> void:
 			revealCell(cellAtMouse)
 	if event.is_action_pressed("flag"):
 		var cellAtMouse : Vector2i = local_to_map(get_local_mouse_position())
-		print(getAtlasCoords(cellAtMouse) == Vector2i(0, 0))
 		if getAtlasCoords(cellAtMouse) == Vector2i(0, 0):
 			set_cell(cellAtMouse, 0, Vector2i(1, 0))
 		elif getAtlasCoords(cellAtMouse) == Vector2i(1, 0):
