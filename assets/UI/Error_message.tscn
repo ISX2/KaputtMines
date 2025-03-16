@@ -1,13 +1,14 @@
-[gd_scene load_steps=20 format=3 uid="uid://cvomhjhmowvy8"]
+[gd_scene load_steps=21 format=3 uid="uid://cvomhjhmowvy8"]
 
 [ext_resource type="Texture2D" uid="uid://b7av0uxftss40" path="res://assets/UI/Error_bg.png" id="1_3mtei"]
 [ext_resource type="StyleBox" uid="uid://bvdu0xasux5o0" path="res://assets/ressources/normal_button.tres" id="1_wyq3e"]
 [ext_resource type="Texture2D" uid="uid://d1eabx5cfc8nl" path="res://assets/UI/icon_redno.png" id="3_8l3j3"]
 [ext_resource type="Texture2D" uid="uid://bl2ja0bwtv7h0" path="res://assets/UI/icon_blue_i.png" id="3_610lp"]
+[ext_resource type="Script" uid="uid://cqie2pir5o5rl" path="res://assets/UI/code_label.gd" id="4_75ftt"]
 [ext_resource type="Texture2D" uid="uid://b6hhjknhdpyyw" path="res://assets/UI/icon_warning.png" id="4_lolpo"]
 [ext_resource type="Texture2D" uid="uid://de5s2h38tmuty" path="res://assets/UI/Dialogue box2.png" id="6_6avjw"]
-[ext_resource type="Texture2D" uid="uid://cuu4um77si0yw" path="res://assets/UI/female_confused.png" id="7_75ftt"]
-[ext_resource type="Texture2D" uid="uid://c3a5pcen5wjh6" path="res://assets/UI/emote_appy.png" id="9_6avjw"]
+[ext_resource type="Texture2D" uid="uid://cuu4um77si0yw" path="res://assets/dialogue/female_confused.png" id="7_75ftt"]
+[ext_resource type="Texture2D" uid="uid://c3a5pcen5wjh6" path="res://assets/dialogue/emote_appy.png" id="9_6avjw"]
 [ext_resource type="Texture2D" uid="uid://dtcdxjfaoowu8" path="res://assets/UI/Dialogue box.png" id="9_oo5s7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wyq3e"]
@@ -44,6 +45,21 @@ font_size = 14
 font_size = 12
 font_color = Color(0.262745, 0.176471, 0.133333, 1)
 
+[sub_resource type="Animation" id="Animation_pk5nw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("character:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="Animation" id="Animation_75ftt"]
 resource_name = "confused"
 length = 2.0
@@ -61,21 +77,6 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3]
 }
 
-[sub_resource type="Animation" id="Animation_pk5nw"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("character:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_oo5s7"]
 _data = {
 &"RESET": SubResource("Animation_pk5nw"),
@@ -90,7 +91,6 @@ offset_bottom = 40.0
 theme = SubResource("Theme_3mtei")
 
 [node name="POP-UP_info" type="NinePatchRect" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 7.075
@@ -99,13 +99,16 @@ size_flags_vertical = 4
 texture = ExtResource("1_3mtei")
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
+script = ExtResource("4_75ftt")
 
 [node name="Sprite2D" type="Sprite2D" parent="POP-UP_info"]
-position = Vector2(14, 32)
+texture_filter = 1
+position = Vector2(20, 34)
 scale = Vector2(1.3125, 1.3125)
 texture = ExtResource("3_610lp")
 
 [node name="exit" type="Button" parent="POP-UP_info"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.936
@@ -113,7 +116,7 @@ anchor_top = 0.018
 anchor_right = 0.982
 anchor_bottom = 0.09
 offset_left = 0.112
-offset_top = 0.0119998
+offset_top = -0.988
 offset_right = 0.0939941
 offset_bottom = 1.06
 theme = SubResource("Theme_610lp")
@@ -122,7 +125,8 @@ theme_override_font_sizes/font_size = 8
 theme_override_styles/normal = SubResource("StyleBoxFlat_ybdej")
 text = "X"
 
-[node name="Button" type="Button" parent="POP-UP_info"]
+[node name="Button_OK" type="Button" parent="POP-UP_info"]
+texture_filter = 1
 layout_mode = 0
 offset_left = 203.0
 offset_top = 135.0
@@ -131,6 +135,7 @@ offset_bottom = 155.0
 text = "okay"
 
 [node name="title" type="Label" parent="POP-UP_info"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.067
@@ -146,21 +151,23 @@ label_settings = SubResource("LabelSettings_h3nbe")
 autowrap_mode = 2
 
 [node name="text" type="Label" parent="POP-UP_info"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.134
 anchor_top = 0.223
 anchor_right = 0.925
 anchor_bottom = 0.753
-offset_left = -6.922
-offset_top = -14.018
-offset_right = -9.77502
-offset_bottom = -83.998
+offset_left = -2.922
+offset_top = -11.018
+offset_right = -5.77502
+offset_bottom = -80.998
 text = "Please confirm transaction code:"
 label_settings = SubResource("LabelSettings_610lp")
 autowrap_mode = 2
 
 [node name="LineEdit" type="LineEdit" parent="POP-UP_info"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.024
@@ -176,7 +183,18 @@ placeholder_text = "copy transaction code"
 emoji_menu_enabled = false
 shortcut_keys_enabled = false
 
+[node name="Code_label" type="Label" parent="POP-UP_info"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 87.0
+offset_top = 54.0
+offset_right = 196.0
+offset_bottom = 77.0
+theme_override_colors/font_color = Color(0.254902, 0.168627, 0.12549, 1)
+text = "SJHDGASJHGD"
+
 [node name="POP-UP_warning" type="NinePatchRect" parent="."]
+visible = false
 texture_filter = 1
 layout_mode = 0
 offset_right = 283.0
@@ -195,7 +213,7 @@ anchor_top = 0.018
 anchor_right = 0.982
 anchor_bottom = 0.09
 offset_left = 0.112
-offset_top = 0.0119998
+offset_top = -0.988
 offset_right = 0.0939941
 offset_bottom = 1.06
 theme = SubResource("Theme_610lp")
@@ -205,7 +223,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_ybdej")
 text = "X"
 
 [node name="Sprite2D" type="Sprite2D" parent="POP-UP_warning"]
-position = Vector2(19, 31)
+position = Vector2(22, 35)
 scale = Vector2(1.3125, 1.3125)
 texture = ExtResource("4_lolpo")
 
@@ -236,9 +254,9 @@ anchor_top = 0.078
 anchor_right = 0.925
 anchor_bottom = 0.169
 offset_left = -9.961
-offset_top = -12.948
+offset_top = -13.948
 offset_right = -42.775
-offset_bottom = -8.054
+offset_bottom = -9.054
 text = "ERROR_BAD_KEY"
 label_settings = SubResource("LabelSettings_h3nbe")
 autowrap_mode = 2
@@ -251,10 +269,10 @@ anchor_left = 0.117
 anchor_top = 0.133
 anchor_right = 0.925
 anchor_bottom = 0.753
-offset_left = -0.111
-offset_top = -0.078001
-offset_right = -2.77502
-offset_bottom = -0.998001
+offset_left = 5.889
+offset_top = 2.922
+offset_right = 3.22498
+offset_bottom = 2.002
 text = "The program could not be opened because there is no valid key. Input valid key and try again"
 label_settings = SubResource("LabelSettings_610lp")
 autowrap_mode = 2
@@ -270,6 +288,7 @@ axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
 
 [node name="exit" type="Button" parent="POP-UP_error"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.936
@@ -277,7 +296,7 @@ anchor_top = 0.018
 anchor_right = 0.982
 anchor_bottom = 0.09
 offset_left = 0.112
-offset_top = 0.0119998
+offset_top = -0.988
 offset_right = 0.0939941
 offset_bottom = 1.06
 theme = SubResource("Theme_610lp")
@@ -287,11 +306,13 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_ybdej")
 text = "X"
 
 [node name="Sprite2D" type="Sprite2D" parent="POP-UP_error"]
+texture_filter = 1
 position = Vector2(22, 35)
 scale = Vector2(1.3125, 1.3125)
 texture = ExtResource("3_8l3j3")
 
 [node name="Button" type="Button" parent="POP-UP_error"]
+texture_filter = 1
 layout_mode = 0
 offset_left = 142.0
 offset_top = 135.0
@@ -300,6 +321,7 @@ offset_bottom = 155.0
 text = "okay"
 
 [node name="Button2" type="Button" parent="POP-UP_error"]
+texture_filter = 1
 layout_mode = 0
 offset_left = 207.0
 offset_top = 135.0
@@ -308,28 +330,31 @@ offset_bottom = 155.0
 text = "cancel"
 
 [node name="title" type="Label" parent="POP-UP_error"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.025
 anchor_right = 0.925
 anchor_bottom = 0.093
-offset_left = -0.0750003
-offset_right = -44.775
-offset_bottom = 4.562
+offset_left = 1.925
+offset_top = -1.0
+offset_right = -42.775
+offset_bottom = 3.562
 text = "ERROR_BAD_KEY"
 label_settings = SubResource("LabelSettings_h3nbe")
 autowrap_mode = 2
 
 [node name="text" type="Label" parent="POP-UP_error"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.134
 anchor_top = 0.223
 anchor_right = 0.925
 anchor_bottom = 0.753
-offset_left = 0.0779991
+offset_left = 1.078
 offset_top = -12.018
-offset_right = 2.22498
+offset_right = 3.22498
 offset_bottom = 2.002
 text = "The program could not be opened because there is no valid key. Input valid key and try again"
 label_settings = SubResource("LabelSettings_610lp")
@@ -351,7 +376,7 @@ hframes = 4
 [node name="Label" type="Label" parent="dialogue user"]
 texture_filter = 1
 anchors_preset = -1
-anchor_top = 0.000497017
+anchor_top = -0.474503
 anchor_bottom = -0.474503
 offset_left = -173.0
 offset_top = -73.0994
@@ -386,3 +411,6 @@ texture_filter = 1
 position = Vector2(371, 332)
 scale = Vector2(2.4375, 2.4375)
 texture = ExtResource("9_6avjw")
+
+[connection signal="pressed" from="POP-UP_info/Button_OK" to="POP-UP_info" method="_on_button_ok_pressed"]
+[connection signal="pressed" from="POP-UP_info/Button_OK" to="POP-UP_info/Code_label" method="_on_button_ok_pressed"]
