@@ -37,7 +37,7 @@ const CHARRED_TILE := Vector2i(3, 3)
 
 var tile_scene = preload("res://Scenes/physical_tile.tscn")
 var tiles = []  # Array to store all tile instances
-var cells = []  # Array to store game data (-1=empty, 0=mine, 1-8=number)
+var cells = []  # Array to store game data (-2= charred, -1=empty, 0=mine, 1-8=number)
 var gameEnded := false
 var game_started := false
 
@@ -84,7 +84,8 @@ func setUpBoard() -> void:
 			
 			# Set position
 			@warning_ignore("integer_division")
-			tile_instance.position = Vector2(x * TILE_SIZE + TILE_SIZE/2, y * TILE_SIZE + TILE_SIZE/2) * SCALE_FACTOR
+			tile_instance.original_position = Vector2(x * TILE_SIZE + TILE_SIZE/2, y * TILE_SIZE + TILE_SIZE/2) * SCALE_FACTOR
+			tile_instance.position = tile_instance.original_position
 			#if y==0 and x==0:
 				#print(tile_instance.position)
 			
@@ -141,7 +142,7 @@ func _on_tile_left_clicked(mouse_position: Vector2) -> void:
 		
 	if background_layer.get_cell_atlas_coords(grid_position) == CHARRED_TILE:
 		print("Spend points to regen")
-		#regenerate_tile(grid_position)
+		regenerate_tile(grid_position)
 		return
 	
 	# setup the tiles at a certain position
@@ -178,9 +179,10 @@ func hide_tiles(fallen_tiles: Array, delay: int) -> void:
 	await get_tree().create_timer(delay).timeout
 	for i in fallen_tiles:
 		if i >= 0:
-			await get_tree().create_timer(0.1).timeout
-			tiles[i].hide()
-			tiles[i].freeze()
+			if tiles[i].current_status == tiles[i].status.CHARRED:
+				await get_tree().create_timer(0.1).timeout
+				tiles[i].hide()
+				tiles[i].freeze = true
 
 func _on_tile_right_clicked(mouse_position: Vector2) -> void:
 	@warning_ignore("narrowing_conversion")
@@ -290,6 +292,77 @@ func revealAllMines(exploded_position: Vector2i) -> void:
 	
 	# Start the explosion effect
 	explode_board()
+
+func regenerate_tile(position: Vector2i) -> void:
+	# Get the tile at this position
+	var index = getCellIndex(position)
+	var tile = tiles[index]
+	
+	# Regenerate this tile
+	regenerate_single_tile(tile)
+	
+	# Regenerate surrounding tiles
+	for y in range(-1, 2):
+		for x in range(-1, 2):
+			var neighbor_pos = position + Vector2i(x, y)
+			var neighbor_index = getCellIndex(neighbor_pos)
+			if neighbor_index >= 0 and neighbor_index < tiles.size():
+				var neighbor_tile = tiles[neighbor_index]
+				regenerate_single_tile(neighbor_tile)
+	
+	# Update surrounding tiles with mine numbers
+	update_surrounding_numbers(position)
+	
+func regenerate_single_tile(tile: Node) -> void:
+	# Reset physics
+	tile.freeze = true
+	tile.input_pickable = true
+	tile.collision_layer = 1
+	tile.collision_mask = 1
+	
+	# Reset position and rotation
+	tile.position = tile.original_position
+	tile.rotation = 0
+	
+	# Show tile
+	tile.show()
+	
+	# Reset tile data
+	tile.current_status = tile.status.HIDDEN
+	
+	# Update texture
+	tile.update_texture(get_tile_region(HIDDEN_TILE))
+	
+	# Update background
+	background_layer.set_cell(tile.grid_position, 0, EMPTY_TILE)
+	
+	# Reassign cell value (50% chance for mine)
+	cells[tile.index] = 0 if randf() < 0.5 else -1
+
+func update_surrounding_numbers(position: Vector2i) -> void:
+	# Update numbers for surrounding cells
+	for y in range(-2, 3):
+		for x in range(-2, 3):
+			var check_pos = position + Vector2i(x, y)
+			var check_index = getCellIndex(check_pos)
+			
+			if check_index >= 0 and check_index < cells.size():
+				if cells[check_index] != 0:
+					# Count surrounding mines
+					var mineCount = 0
+					for dy in range(-1, 2):
+						for dx in range(-1, 2):
+							var neighbor_pos = check_pos + Vector2i(dx, dy)
+							var neighbor_index = getCellIndex(neighbor_pos)
+							if neighbor_index >= 0 and neighbor_index < cells.size():
+								if cells[neighbor_index] == 0:
+									mineCount += 1
+					
+					# Update cell value
+					if mineCount > 0:
+						cells[check_index] = mineCount
+					else:
+						cells[check_index] = -1
 
 func explode_board() -> void:
 	# Start with a small delay

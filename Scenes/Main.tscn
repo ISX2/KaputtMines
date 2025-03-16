@@ -251,6 +251,7 @@ script = ExtResource("4_rgh2o")
 script = ExtResource("6_50glp")
 
 [node name="BackgroundLayer" type="TileMapLayer" parent="Window/Minesweeper"]
+texture_filter = 1
 scale = Vector2(2, 2)
 tile_set = SubResource("TileSet_frkhe")
 

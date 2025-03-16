@@ -7,6 +7,7 @@ enum status {HIDDEN, FLAGGED, REVEALED, CHARRED}
 
 var index: int
 var grid_position: Vector2i
+var original_position: Vector2
 var is_revealed: bool = false
 var is_flagged: bool = false
 var current_status := status.HIDDEN
