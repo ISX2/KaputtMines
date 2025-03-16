@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://c51g6lnuo3s26"]
+[gd_scene load_steps=5 format=3 uid="uid://c51g6lnuo3s26"]
 
 [ext_resource type="Script" uid="uid://y2wcknhqh7x7" path="res://Scripts/physical_tilev2.gd" id="1_vtj4q"]
 [ext_resource type="Texture2D" uid="uid://cgl6n58hei64b" path="res://assets/Tile.png" id="2_vtj4q"]
+[ext_resource type="Script" uid="uid://dtlxpr71d6f36" path="res://Scenes/tile_collision.gd" id="3_qolid"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qolid"]
 
@@ -15,3 +16,4 @@ texture = ExtResource("2_vtj4q")
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_qolid")
+script = ExtResource("3_qolid")

@@ -241,7 +241,6 @@ title = "CatMines"
 initial_position = 1
 size = Vector2i(960, 512)
 exclusive = true
-unresizable = true
 mouse_passthrough = true
 theme = SubResource("Theme_v1gob")
 theme_override_colors/title_color = Color(0.211765, 0.211765, 0.337255, 1)

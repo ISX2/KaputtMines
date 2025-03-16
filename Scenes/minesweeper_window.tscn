@@ -4,6 +4,7 @@
 
 [node name="MinesweeperWindow" type="Control"]
 layout_mode = 3
+anchors_preset = 0
 offset_right = 969.6
 offset_bottom = 552.96
 script = ExtResource("1_ukwct")

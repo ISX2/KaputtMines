@@ -1,6 +1,62 @@
-[gd_scene load_steps=2 format=3 uid="uid://b8dabd21j0ckn"]
+[gd_scene load_steps=7 format=3 uid="uid://b8dabd21j0ckn"]
 
 [ext_resource type="Script" uid="uid://d2ljrol8m1cyr" path="res://Scripts/minesweeper_boardv2.gd" id="1_22q3e"]
+[ext_resource type="Texture2D" uid="uid://cgl6n58hei64b" path="res://assets/Tile.png" id="2_rf5he"]
+[ext_resource type="Texture2D" uid="uid://33u7k0n645kw" path="res://assets/Tile - 2.png" id="3_hg8vg"]
 
-[node name="Minesweeper" type="Node2D"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hg8vg"]
+texture = ExtResource("2_rf5he")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dfkm2"]
+texture = ExtResource("3_hg8vg")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_7xpvn"]
+sources/0 = SubResource("TileSetAtlasSource_hg8vg")
+sources/1 = SubResource("TileSetAtlasSource_dfkm2")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Minesweeper" type="Node2D" parent="."]
 script = ExtResource("1_22q3e")
+
+[node name="BackgroundLayer" type="TileMapLayer" parent="Minesweeper"]
+scale = Vector2(2, 2)
+tile_set = SubResource("TileSet_7xpvn")

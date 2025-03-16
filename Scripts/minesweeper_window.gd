@@ -21,6 +21,7 @@ func _ready():
 	# Connect the close button
 	$TitleBar/CloseButton.pressed.connect(_on_close_button_pressed)
 
+
 func _on_title_bar_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:

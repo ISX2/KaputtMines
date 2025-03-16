@@ -6,6 +6,9 @@ const MINE_COUNT := 99
 const SCALE_FACTOR := Vector2(2, 2)
 const TILE_SIZE := 16
 
+@onready var window = $".."
+@onready var root = $"../.."
+
 
 # Texture atlas constants
 const TILE_ATLAS_COLS := 4
@@ -17,6 +20,7 @@ const TILE_HEIGHT := 16
 const HIDDEN_TILE := Vector2i(0, 0)
 const FLAG_TILE := Vector2i(1, 0)
 const QUESTION_TILE := Vector2i(2, 0)
+const CRACKED_TILE := Vector2i(3, 0)
 const EMPTY_TILE := Vector2i(1, 4)
 const NUM1_TILE := Vector2i(0, 1)
 const NUM2_TILE := Vector2i(1, 1)
@@ -29,22 +33,32 @@ const NUM8_TILE := Vector2i(3, 2)
 const MINE_TILE := Vector2i(0, 3)
 const MINE_RED_TILE := Vector2i(1, 3)
 const MINE_X_TILE := Vector2i(2, 3)
-const MINE_CHECK_TILE := Vector2i(3, 3)
+const CHARRED_TILE := Vector2i(3, 3)
 
 var tile_scene = preload("res://Scenes/physical_tile.tscn")
 var tiles = []  # Array to store all tile instances
 var cells = []  # Array to store game data (-1=empty, 0=mine, 1-8=number)
 var gameEnded := false
-var firstClick := true
+var game_started := false
+
+var bomb_aoe_radius = 3
 
 # Texture
 var tile_texture: Texture2D
 
+@onready var background_layer = $BackgroundLayer
+
 func _ready() -> void:
 	# Load the tile atlas texture
-	tile_texture = load("res://assets/Tile - 2.png")  # Path to your tile atlas
+	tile_texture = load("res://assets/Tile.png")  # Path to your tile atlas
+	
+	setup_background_layer()
+	
 	setUpBoard()
-
+	#if window is Window:
+		#window.connect("left_clicked", Callable(self, "_on_tile_left_clicked"))
+		#window.connect("right_clicked", Callable(self, "_on_tile_right_clicked"))
+		
 func get_tile_region(coords: Vector2i) -> Rect2:
 	# Convert grid coordinates to pixel coordinates in the atlas
 	return Rect2(
@@ -61,17 +75,19 @@ func setUpBoard() -> void:
 		cells.append(-1)
 	
 	# Create all tiles
+	tiles.clear()
 	for y in range(CELL_COLUMNS):
 		for x in range(CELL_ROWS):
 			var tile_instance = tile_scene.instantiate()
 			add_child(tile_instance)
 			
-			# Set position
-			tile_instance.position = Vector2(x * TILE_SIZE, y * TILE_SIZE) * SCALE_FACTOR
-			if y==0 and x==1:
-				print(tile_instance.position)
 			
-			# Set up the tile with texture and region
+			# Set position
+			@warning_ignore("integer_division")
+			tile_instance.position = Vector2(x * TILE_SIZE + TILE_SIZE/2, y * TILE_SIZE + TILE_SIZE/2) * SCALE_FACTOR
+			#if y==0 and x==0:
+				#print(tile_instance.position)
+			
 			tile_instance.setup(tile_texture, get_tile_region(HIDDEN_TILE), SCALE_FACTOR)
 			
 			# Store reference to tile
@@ -83,8 +99,14 @@ func setUpBoard() -> void:
 			tile_instance.grid_position = Vector2i(x, y)
 			
 			# Connect signals
-			tile_instance.connect("left_clicked", Callable(self, "_on_tile_left_clicked"))
-			tile_instance.connect("right_clicked", Callable(self, "_on_tile_right_clicked"))
+			#tile_instance.connect("left_clicked", Callable(self, "_on_tile_left_clicked"))
+			#tile_instance.connect("right_clicked", Callable(self, "_on_tile_right_clicked"))
+
+func setup_background_layer() -> void:
+	# Fill the background layer with empty tiles
+	for y in range(CELL_COLUMNS):
+		for x in range(CELL_ROWS):
+			background_layer.set_cell(Vector2i(x, y), 0, EMPTY_TILE)
 
 func setUpMines(avoid: Vector2i) -> void:
 	# Place mines
@@ -107,37 +129,75 @@ func setUpMines(avoid: Vector2i) -> void:
 						mineCount += 1
 				if mineCount > 0:
 					cells[getCellIndex(Vector2i(x, y))] = mineCount
+	
 
-func _on_tile_left_clicked(index: int) -> void:
+func _on_tile_left_clicked(mouse_position: Vector2) -> void:
+	var cell_coords = Vector2i(floor(mouse_position.x / (TILE_SIZE * SCALE_FACTOR.x)), floor(mouse_position.y / (TILE_SIZE * SCALE_FACTOR.y)))
+	var index = getCellIndex(cell_coords)
+	#print()
 	var tile = tiles[index]
 	var grid_position = tile.grid_position
 	
-	if gameEnded:
+		
+	if background_layer.get_cell_atlas_coords(grid_position) == CHARRED_TILE:
+		print("Spend points to regen")
+		#regenerate_tile(grid_position)
 		return
 	
-	if firstClick:
-		firstClick = false
+	# setup the tiles at a certain position
+	if not game_started:
+		game_started = true
 		setUpMines(grid_position)
 	
 	revealCell(grid_position)
 	
 	if cells[index] == 0:
-		gameEnded = true
-		revealAllMines(grid_position)
+		# TODO
+		# calculate AoE
+		explode_bomb(cell_coords)
+		
+func explode_bomb(cell_coords: Vector2i) -> void:
+	var charred_cells = get_surrounding_indices(cell_coords, bomb_aoe_radius)
+	
+	for i in charred_cells:
+		if i >= 0:
+			# set the tile's status to charred
+			tiles[i].current_status = tiles[i].status.CHARRED
+			background_layer.set_cell(tiles[i].grid_position, 0, CHARRED_TILE)
+			cells[i] = -2 #charred
+			
+			# crack the physical tile
+			tiles[i].update_texture(get_tile_region(CRACKED_TILE))
+			tiles[i].activate_physics()
+			
+	# TODO: Add fade-away animation
+	hide_tiles(charred_cells, 5)
+	
+	
+func hide_tiles(fallen_tiles: Array, delay: int) -> void:
+	await get_tree().create_timer(delay).timeout
+	for i in fallen_tiles:
+		if i >= 0:
+			await get_tree().create_timer(0.1).timeout
+			tiles[i].hide()
+			tiles[i].freeze()
 
-func _on_tile_right_clicked(index: int) -> void:
+func _on_tile_right_clicked(mouse_position: Vector2) -> void:
+	@warning_ignore("narrowing_conversion")
+	var index = getCellIndex(Vector2i(floor(mouse_position.x / (TILE_SIZE * SCALE_FACTOR.x)), floor(mouse_position.y / (TILE_SIZE * SCALE_FACTOR.y))))
+	
 	var tile = tiles[index]
 	
 	if gameEnded or tile.is_revealed:
 		return
 	
-	if tile.is_flagged:
+	if tile.current_status == tile.status.FLAGGED:
 		# Change to question mark (if you want)
-		tile.is_flagged = false
+		tile.current_status = tile.status.HIDDEN
 		tile.update_texture(get_tile_region(HIDDEN_TILE))
 	else:
 		# Flag tile
-		tile.is_flagged = true
+		tile.current_status = tile.status.FLAGGED
 		tile.update_texture(get_tile_region(FLAG_TILE))
 
 func revealCell(cellCoords: Vector2i) -> void:
@@ -146,7 +206,7 @@ func revealCell(cellCoords: Vector2i) -> void:
 		return
 	
 	var tile = tiles[cellIndex]
-	if tile.is_revealed or tile.is_flagged:
+	if tile.current_status == tile.status.REVEALED  or tile.current_status == tile.status.FLAGGED:
 		return
 	
 	tile.is_revealed = true
@@ -157,8 +217,6 @@ func revealCell(cellCoords: Vector2i) -> void:
 			tile.update_texture(get_tile_region(EMPTY_TILE))
 			# Reveal surrounding cells
 			revealSurroundingCells(cellCoords)
-		0: # Mine
-			tile.update_texture(get_tile_region(MINE_RED_TILE))
 		1: tile.update_texture(get_tile_region(NUM1_TILE))
 		2: tile.update_texture(get_tile_region(NUM2_TILE))
 		3: tile.update_texture(get_tile_region(NUM3_TILE))
@@ -173,24 +231,42 @@ func getCellIndex(cellCoords: Vector2i) -> int:
 		return -1
 	return cellCoords.y * CELL_ROWS + cellCoords.x
 
-func getSurroundingCells(cellCoords: Vector2i, size: int) -> Array:
-	var surroundingCells = []
+func getCellCoords(index : int) -> Vector2i:
+	if index < CELL_COLUMNS * CELL_ROWS and index > 0:
+		@warning_ignore("integer_division")
+		return Vector2i(index % CELL_COLUMNS, index / CELL_COLUMNS)
+	return Vector2i(-1, -1)
+
+func get_surrounding_indices(cell_coords: Vector2i, size: int) -> Array:
+	var surrounding_indices = []
 	for y in range(-1, size-1):
 		for x in range(-1, size-1):
-			var offsetCoords = cellCoords + Vector2i(x, y)
-			var index = getCellIndex(offsetCoords)
+			var offset_coords = cell_coords + Vector2i(x, y)
+			var index = getCellIndex(offset_coords)
 			if index >= 0 and index < cells.size():
-				surroundingCells.append(cells[index])
+				surrounding_indices.append(index)
 			else:
-				surroundingCells.append(-1)
-	return surroundingCells
+				surrounding_indices.append(-1)
+	return surrounding_indices
+
+func getSurroundingCells(cell_coords: Vector2i, size: int) -> Array:
+	var surrounding_cells = []
+	for y in range(-1, size-1):
+		for x in range(-1, size-1):
+			var offset_coords = cell_coords + Vector2i(x, y)
+			var index = getCellIndex(offset_coords)
+			if index >= 0 and index < cells.size():
+				surrounding_cells.append(cells[index])
+			else:
+				surrounding_cells.append(-1)
+	return surrounding_cells
 
 func revealSurroundingCells(cellCoords: Vector2i) -> void:
 	for y in range(-1, 2):
 		for x in range(-1, 2):
 			var offsetCoords = cellCoords + Vector2i(x, y)
 			var index = getCellIndex(offsetCoords)
-			if index >= 0 and index < tiles.size():
+			if index > 0 and index < tiles.size():
 				var tile = tiles[index]
 				if not tile.is_revealed and not tile.is_flagged:
 					revealCell(offsetCoords)
@@ -207,7 +283,7 @@ func revealAllMines(exploded_position: Vector2i) -> void:
 					tile.update_texture(get_tile_region(MINE_RED_TILE))
 				elif tile.is_flagged:
 					# Correctly flagged mine
-					tile.update_texture(get_tile_region(MINE_CHECK_TILE))
+					tile.update_texture(get_tile_region(MINE_X_TILE))
 				else:
 					# Regular mine
 					tile.update_texture(get_tile_region(MINE_TILE))
@@ -232,5 +308,4 @@ func explode_board() -> void:
 		## Apply random rotation
 		#var random_torque = (randf() - 0.5) * 2 * 100
 		#tile.apply_torque(random_torque)
-		
 		
