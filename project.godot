@@ -23,6 +23,10 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="canvas_items"
 
+[dotnet]
+
+project/assembly_name="KaputtMines"
+
 [gui]
 
 theme/custom_font="uid://bnjo6e83cgios"
