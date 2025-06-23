@@ -20,7 +20,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 CursorStateMachine="*res://Scripts/cursor_state_machine.gd"
-ResourceManager="*res://Scripts/resource_manager.gd"
+ResourceManager="*res://Scenes/resource_manager.tscn"
 
 [display]
 
