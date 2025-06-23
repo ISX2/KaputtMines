@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://baye83b0l8ve4"]
+[gd_scene load_steps=3 format=3 uid="uid://baye83b0l8ve4"]
 
 [ext_resource type="Script" uid="uid://d0ub4lr674wbs" path="res://Scripts/resource_manager.gd" id="1_1y68u"]
+[ext_resource type="Texture2D" uid="uid://de2cevnmr0je" path="res://assets/cursor.png" id="2_w383i"]
 
 [node name="ResourceManager" type="Node"]
 script = ExtResource("1_1y68u")
+cursor_sprite_default = ExtResource("2_w383i")
