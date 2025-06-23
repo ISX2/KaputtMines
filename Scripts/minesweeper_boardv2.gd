@@ -38,7 +38,7 @@ const CHARRED_TILE := Vector2i(3, 3)
 var tile_scene = preload("res://Scenes/physical_tile.tscn")
 var tiles = []  # Array to store all tile instances
 var cells = []  # Array to store game data (-2= charred, -1=empty, 0=mine, 1-8=number)
-var gameEnded := false
+var game_ended := false
 var game_started := false
 
 var bomb_aoe_radius = 3
@@ -190,7 +190,7 @@ func _on_tile_right_clicked(mouse_position: Vector2) -> void:
 	
 	var tile = tiles[index]
 	
-	if gameEnded or tile.is_revealed:
+	if game_ended or tile.is_revealed:
 		return
 	
 	if tile.current_status == tile.status.FLAGGED:
@@ -293,6 +293,28 @@ func revealAllMines(exploded_position: Vector2i) -> void:
 	# Start the explosion effect
 	explode_board()
 
+
+
+# Explode the entire board :)
+func explode_board() -> void:
+	# Start with a small delay
+	await get_tree().create_timer(0.1).timeout
+	
+	# Make all tiles fall with physics
+	for tile in tiles:
+		tile.activate_physics()
+		
+		# Apply explosion force
+		#var direction = (tile.global_position - global_position).normalized()
+		#var distance = tile.global_position.distance_to(global_position)
+		#var force = direction * (300 / max(1, distance * 0.1)) * (0.8 + randf() * 0.4)
+		#tile.apply_central_impulse(force)
+		#
+		## Apply random rotation
+		#var random_torque = (randf() - 0.5) * 2 * 100
+		#tile.apply_torque(random_torque)
+		
+		
 func regenerate_tile(position: Vector2i) -> void:
 	# Get the tile at this position
 	var index = getCellIndex(position)
@@ -363,22 +385,3 @@ func update_surrounding_numbers(position: Vector2i) -> void:
 						cells[check_index] = mineCount
 					else:
 						cells[check_index] = -1
-
-func explode_board() -> void:
-	# Start with a small delay
-	await get_tree().create_timer(0.1).timeout
-	
-	# Make all tiles fall with physics
-	for tile in tiles:
-		tile.activate_physics()
-		
-		# Apply explosion force
-		#var direction = (tile.global_position - global_position).normalized()
-		#var distance = tile.global_position.distance_to(global_position)
-		#var force = direction * (300 / max(1, distance * 0.1)) * (0.8 + randf() * 0.4)
-		#tile.apply_central_impulse(force)
-		#
-		## Apply random rotation
-		#var random_torque = (randf() - 0.5) * 2 * 100
-		#tile.apply_torque(random_torque)
-		

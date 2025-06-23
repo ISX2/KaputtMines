@@ -22,6 +22,6 @@ func create_minesweeper_window():
 	
 	# If you want to create the window with a specific size
 	# (Note: this doesn't allow runtime resizing, just initial setup)
-	var window_size = Vector2(350, 450)  # Adjust to fit your minesweeper game
+	var window_size = Vector2(350, 450)  # Adjust to fit minesweeper game
 	window.get_node("Panel").custom_minimum_size = window_size
 	window.get_node("WindowContent").custom_minimum_size = Vector2(window_size.x, window_size.y - 30)  # Subtract title bar height
