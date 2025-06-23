@@ -1,6 +1,6 @@
 class_name CursorState
 
-var cursor_sprite: Sprite2D
+#@export var cursor_sprite: Image
 
 func on_state_entered() -> void:
 	# Called when the state is entered
